@@ -1,32 +1,29 @@
 function loadGrain(levels) {
-    let result = 0
+    let rightMax = 0,
+        leftMax = 0,
+        rightI = levels.length - 1,
+        leftI = 0,
+        result = 0;
 
-    if (levels.length < 3) {
-        return 0
-    }
-
-    if (levels[0] > levels[levels.length - 1])
-        for (let i = levels.length - 1; i >= 0; i--) {
-            if (levels[i] > levels[i - 1]) {
-                result += levels[i] - levels[i - 1]
-                levels[i - 1] = levels[i]
-            }
+    while (leftI < rightI) {
+        if (levels[leftI] > leftMax) {
+            leftMax = levels[leftI];
         }
-    else {
-        for (let i = 0; i < levels.length; i++) {
-            if (i + 1 === levels.length - 1) {
-                break
-            }
-            if (levels[i] > levels[i + 1]) {
-                result += levels[i] - levels[i + 1]
-                levels[i + 1] = levels[i]
-            }
+        if (levels[rightI] > rightMax) {
+            rightMax = levels[rightI];
+        }
+        if (leftMax >= rightMax) {
+            result += rightMax - levels[rightI];
+            rightI--;
+        } else {
+            result += leftMax - levels[leftI];
+            leftI++;
         }
     }
     return result;
 }
 
-loadGrain([15, 0, 6, 10, 11, 2, 5])//20g
+loadGrain([15, 0, 6, 10, 11, 2, 5])//20
 loadGrain([4, 1, 3])// 2
 loadGrain([2, 1, 5, 2, 7, 4, 10])// 7
 loadGrain([2, 0, 1, 5, 2, 7]) // 6
@@ -34,5 +31,7 @@ loadGrain([2, 4, 2]) // 0
 loadGrain([7, 4]) // 0
 loadGrain([]) // 0
 
+
+console.log(loadGrain([35, 39, 48, 14, 36, 32, 33, 6, 1, 9, 0, 47, 42, 23, 32]))// 254
 
 
